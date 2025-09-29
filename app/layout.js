@@ -1,15 +1,19 @@
 import './globals.css'
 
 export const metadata = {
-  title: 'Snatcho - Compare & Save',
-  description: 'Snatcho helps you compare prices instantly across Amazon, Flipkart, Blinkit, Zepto and more.',
+  title: 'Snatcho India',
+  description: 'The crazy mad founder startup page — join the waitlist now.',
   openGraph: {
-    title: 'Snatcho - Compare & Save',
-    description: 'Snatcho helps you compare prices instantly across Amazon, Flipkart, Blinkit, Zepto and more.',
+    title: 'Snatcho India',
+    description: 'Join Snatcho waitlist, get exclusive coupons.',
     url: 'https://snatchoindia.com',
     siteName: 'Snatcho',
     images: [
-      { url: '/logo.png', width: 800, height: 600, alt: 'Snatcho Logo' }
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+      },
     ],
     locale: 'en_IN',
     type: 'website',
@@ -19,9 +23,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="bg-white dark:bg-black text-black dark:text-white transition-colors">
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   )
 }

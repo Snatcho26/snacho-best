@@ -1,42 +1,47 @@
-'use client'
-import { motion } from "framer-motion";
-import { useState } from "react";
+'use client';
 
-export default function HomePage() {
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
+import { motion } from 'framer-motion';
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const res = await fetch("/api/send-email", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, name }),
-    });
-    if (res.ok) {
-      window.location.href = "/congrats";
-    }
-  };
-
+export default function Home() {
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen text-center p-6">
-      <motion.img src="/logo.png" alt="Snatcho Logo" initial={{ y: -50, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8 }} className="w-40 h-40 mb-6"/>
-      <motion.h1 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="text-4xl font-bold mb-4">
-        Compare. Save. Snatch it.
+    <main className="flex min-h-screen flex-col items-center justify-center p-8">
+      <motion.h1
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="text-5xl font-extrabold mb-6 text-center"
+      >
+        Snatcho India 🚀
       </motion.h1>
-      <p className="mb-6">Join the waitlist today & get your launch coupon!</p>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-full max-w-sm">
-        <input type="text" placeholder="Your Name" value={name} onChange={(e) => setName(e.target.value)} className="p-2 rounded bg-gray-100 dark:bg-gray-800"/>
-        <input type="email" placeholder="Your Email" value={email} onChange={(e) => setEmail(e.target.value)} className="p-2 rounded bg-gray-100 dark:bg-gray-800"/>
-        <button type="submit" className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Join Waitlist</button>
+      <p className="text-lg max-w-xl text-center mb-6">
+        The founder is mad & crazy — join our waitlist for exclusive coupons.
+      </p>
+      <form
+        action="/api/join-waitlist"
+        method="POST"
+        className="flex flex-col gap-4 max-w-md w-full"
+      >
+        <input
+          type="text"
+          name="name"
+          placeholder="Your Name"
+          required
+          className="p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent"
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Your Email"
+          required
+          className="p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent"
+        />
+        <button
+          type="submit"
+          className="p-3 rounded-lg bg-green-600 text-white hover:bg-green-700"
+        >
+          Join Waitlist
+        </button>
       </form>
-      <section className="mt-16">
-        <h2 className="text-2xl font-semibold mb-4">Follow us on Instagram</h2>
-        <a href="https://instagram.com/snatchoindia" target="_blank" rel="noopener noreferrer" className="block bg-gray-100 dark:bg-gray-900 p-4 rounded-xl shadow-md hover:scale-105 transition-transform">
-          <p className="font-bold">@snatchoindia</p>
-          <p className="text-sm">See our latest updates & offers</p>
-        </a>
-      </section>
     </main>
-  )
+  );
 }
