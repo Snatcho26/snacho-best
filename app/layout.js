@@ -1,29 +1,29 @@
 import './globals.css'
 
 export const metadata = {
-  title: 'Snatcho India',
-  description: 'The crazy mad founder startup page — join the waitlist now.',
+  title: 'Snatcho — Snatch the best deal',
+  description: 'Compare prices across Amazon, Flipkart, Blinkit, Zepto & more. Join the waitlist.',
   openGraph: {
-    title: 'Snatcho India',
-    description: 'Join Snatcho waitlist, get exclusive coupons.',
+    title: 'Snatcho — Snatch the best deal',
+    description: 'Compare prices across Amazon, Flipkart, Blinkit, Zepto & more. Join the waitlist.',
     url: 'https://snatchoindia.com',
     siteName: 'Snatcho',
     images: [
       {
-        url: '/og-image.png',
+        url: '/logo.png',
         width: 1200,
         height: 630,
       },
     ],
-    locale: 'en_IN',
-    type: 'website',
   },
 }
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {children}
+      </body>
     </html>
-  )
+  );
 }
