@@ -1,64 +1,79 @@
 'use client';
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import InstagramCard from '../components/InstagramCard';
 
 export default function Home() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [done, setDone] = useState(false);
 
-  const submit = async (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
-    setError(null);
-    try {
-      const res = await fetch('/api/join', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email }),
-      });
-      const data = await res.json();
-      if (res.ok && data.success) {
-        window.location.href = '/congrats';
-      } else {
-        setError(data.error || 'Unknown error');
-      }
-    } catch (err) {
-      setError(err.message);
-    }
+
+    const form = new FormData(e.target);
+    const name = form.get('name');
+    const email = form.get('email');
+
+    const res = await fetch('/api/join-waitlist', {
+      method: 'POST',
+      body: JSON.stringify({ name, email }),
+    });
+
     setLoading(false);
-  };
+    if (res.ok) {
+      setDone(true);
+      window.location.href = '/congrats';
+    }
+  }
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center px-6 py-12">
-      <motion.img src="/logo.png" alt="Snatcho" className="w-48 mb-6" initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} />
-      <motion.h1 className="text-4xl md:text-6xl font-extrabold mb-4" initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 0.2 } }}>
-        Snatch the Best Deals ⚡
-      </motion.h1>
-      <p className="max-w-2xl text-center text-gray-600 dark:text-gray-300 mb-8">Compare prices from Amazon, Flipkart, Blinkit, Zepto & more. Get exclusive discounts and student offers — all in one app.</p>
+    <main className="min-h-screen flex flex-col items-center justify-center p-8 bg-gradient-to-b from-gray-950 via-black to-gray-900 text-white">
+      <div className="max-w-2xl text-center">
+        <h1 className="text-5xl font-extrabold mb-6">
+          ⚡ Join the <span className="text-green-400">Snatch Force</span>
+        </h1>
+        <p className="text-lg text-gray-300 mb-8">
+          Be among the <strong>first rebels</strong> to snatch deals before anyone else.
+          Early members = exclusive rewards. Don’t miss out.
+        </p>
 
-      <div className="w-full max-w-md">
-        <form onSubmit={submit} className="card">
-          <input value={name} onChange={(e)=>setName(e.target.value)} placeholder="Your name" required className="w-full p-3 rounded-md mb-3 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700" />
-          <input value={email} onChange={(e)=>setEmail(e.target.value)} placeholder="Email" required type="email" className="w-full p-3 rounded-md mb-3 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700" />
-          <label className="flex items-center text-sm mb-4"><input type="checkbox" defaultChecked className="mr-2" /> I agree to receive emails from Snatcho.</label>
-          <button className="btn btn-primary w-full" disabled={loading}>{loading ? 'Joining...' : 'Join the Waitlist'}</button>
-          {error && <p className="text-red-500 mt-3 text-sm">{error}</p>}
-        </form>
+        {!done && (
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col sm:flex-row items-center gap-4 justify-center"
+          >
+            <input
+              type="text"
+              name="name"
+              placeholder="Your Name"
+              required
+              className="px-4 py-3 rounded-lg w-full sm:w-1/3 text-black"
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Your Email"
+              required
+              className="px-4 py-3 rounded-lg w-full sm:w-1/3 text-black"
+            />
+            <button
+              type="submit"
+              disabled={loading}
+              className="px-6 py-3 rounded-xl font-bold bg-gradient-to-r from-green-500 to-green-700 text-white shadow-lg hover:scale-105 transition"
+            >
+              {loading ? 'Joining...' : '🚀 Join Now'}
+            </button>
+          </form>
+        )}
 
-        <div className="mt-8">
-          <div className="card">
-            <h3 className="font-semibold mb-2">Your Reward</h3>
-            <p className="mb-2">Use coupon <strong>SNATCHFORCE</strong> — valid 45 days after launch.</p>
-            <a className="text-sm text-gray-500" href="/terms">Terms apply</a>
-          </div>
-        </div>
+        {done && (
+          <p className="mt-6 text-green-400 font-bold">
+            🎉 You’re in! Redirecting...
+          </p>
+        )}
 
-        <div className="mt-8">
-          <InstagramCard handle="snatchoindia" />
-        </div>
+        <p className="text-xs text-gray-500 mt-6">
+          No spam. Just madness + exclusive drops.
+        </p>
       </div>
     </main>
   );
