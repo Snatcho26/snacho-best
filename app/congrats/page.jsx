@@ -22,8 +22,10 @@ export default function Congrats() {
         <p className="text-sm text-gray-400 mb-8">
           Valid 45 days after launch. Keep it safe 🔒
         </p>
+
+        {/* 🚀 Insta Button */}
         <a
-          href="https://instagram.com/snatchoindia"
+          href="https://www.instagram.com/snatchoindia/?hl=en"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-block px-6 py-3 text-lg font-bold rounded-xl bg-gradient-to-r from-green-500 to-green-700 text-white shadow-lg hover:scale-105 transition"
