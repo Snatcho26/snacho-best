@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+  --accent: #22c55e;
+  --muted: #9ca3af;
+}
+
+body { @apply bg-gradient-to-b from-slate-900 via-black to-slate-950 text-white; }
+.brand-logo { max-width: 360px; margin: 0 auto; display:block; }

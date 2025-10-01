@@ -1,53 +1,42 @@
-'use client';
-import { useState } from 'react';
-import Image from 'next/image';
+'use client'
+import { useState } from 'react'
 
 export default function Home() {
-  const [loading, setLoading] = useState(false);
-  const [done, setDone] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   async function handleSubmit(e) {
-    e.preventDefault();
-    setLoading(true);
-    const form = new FormData(e.target);
-    const name = form.get('name');
-    const email = form.get('email');
+    e.preventDefault()
+    setLoading(true)
+    const fd = new FormData(e.target)
+    const name = fd.get('name')
+    const email = fd.get('email')
 
     const res = await fetch('/api/join-waitlist', {
       method: 'POST',
-      body: JSON.stringify({ name, email }),
-    });
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email })
+    })
 
-    setLoading(false);
-    if (res.ok) {
-      setDone(true);
-      window.location.href = '/congrats';
-    }
+    setLoading(false)
+    if (res.ok) window.location.href = '/congrats'
+    else alert('Something went wrong — try again.')
   }
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center p-8 bg-gradient-to-b from-gray-950 via-black to-gray-900 text-white">
-      <div className="max-w-2xl text-center">
-        <Image src="/snatcho-logo.png" width={200} height={80} alt="Snatcho Logo" className="mx-auto mb-6" />
-        <h1 className="text-5xl font-extrabold mb-6">
-          ⚡ Join the <span className="text-green-400">Snatch Force</span>
-        </h1>
-        <p className="text-lg text-gray-300 mb-8">
-          Be among the <strong>first rebels</strong> to snatch deals before anyone else.
-          Early members = exclusive rewards. Don’t miss out.
-        </p>
-        {!done && (
-          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row items-center gap-4 justify-center">
-            <input type="text" name="name" placeholder="Your Name" required className="px-4 py-3 rounded-lg w-full sm:w-1/3 text-black" />
-            <input type="email" name="email" placeholder="Your Email" required className="px-4 py-3 rounded-lg w-full sm:w-1/3 text-black" />
-            <button type="submit" className="px-6 py-3 bg-gradient-to-r from-green-500 to-green-700 text-white text-lg font-bold rounded-xl shadow-lg hover:scale-105 transition">
-              ⚡ Join the Snatch Force
-            </button>
-          </form>
-        )}
-        {done && (<p className="mt-6 text-green-400 font-bold">🎉 You’re in! Redirecting...</p>)}
-        <p className="text-xs text-gray-500 mt-6">No spam. Just madness + exclusive drops.</p>
+    <main className="min-h-screen flex items-center justify-center p-6">
+      <div className="max-w-3xl w-full text-center">
+        <img src="/snatcho-logo.png" alt="Snatcho" className="brand-logo mb-6" />
+        <h1 className="text-5xl font-extrabold mb-4">⚡&nbsp;Join the <span className="text-green-400">Snatch Force</span></h1>
+        <p className="text-gray-400 mb-8">Be among the first rebels to snatch deals before anyone else. Early members = exclusive rewards.</p>
+
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-[1fr_1fr_auto] gap-4 items-center">
+          <input name="name" required placeholder="Your name" className="px-4 py-3 rounded-lg text-black" />
+          <input name="email" type="email" required placeholder="Email" className="px-4 py-3 rounded-lg text-black" />
+          <button className="px-6 py-3 rounded-lg bg-gradient-to-r from-green-500 to-green-700 font-bold" type="submit">{loading ? 'Joining...' : '⚡ Join the Snatch Force'}</button>
+        </form>
+
+        <p className="text-sm text-gray-500 mt-4">No spam. Just madness + exclusive drops.</p>
       </div>
     </main>
-  );
+  )
 }
