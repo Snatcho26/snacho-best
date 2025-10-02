@@ -1,5 +1,5 @@
 {
-  "name": "snatcho-nextjs",
+  "name": "snatcho-landing-resend",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -11,7 +11,6 @@
     "next": "14.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "framer-motion": "^10.16.4",
     "tailwindcss": "^3.4.12",
     "postcss": "^8.4.31",
     "autoprefixer": "^10.4.16",
